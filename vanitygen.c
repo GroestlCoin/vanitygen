@@ -32,6 +32,8 @@
 #include "pattern.h"
 #include "util.h"
 
+int GRSFlag = 0;
+
 const char *version = VANITYGEN_VERSION;
 
 
@@ -312,6 +314,7 @@ usage(const char *name)
 "-k            Keep pattern and continue search after finding a match\n"
 "-1            Stop after first match\n"
 "-N            Generate namecoin address\n"
+"-G			   Generate Groestlcoin address\n"
 "-T            Generate bitcoin testnet address\n"
 "-X <version>  Generate address with the given version\n"
 "-F <format>   Generate address with the given format (pubkey or script)\n"
@@ -361,7 +364,7 @@ main(int argc, char **argv)
 
 	int i;
 
-	while ((opt = getopt(argc, argv, "vqnrik1eE:P:NTX:F:t:h?f:o:s:")) != -1) {
+	while ((opt = getopt(argc, argv, "vqnrik1eE:P:NTGX:F:t:h?f:o:s:")) != -1) {
 		switch (opt) {
 		case 'v':
 			verbose = 2;
@@ -393,6 +396,12 @@ main(int argc, char **argv)
 			addrtype = 111;
 			privtype = 239;
 			scriptaddrtype = 196;
+			break;
+		case 'G':
+			GRSFlag = 1;
+			addrtype = 0x24;
+			privtype = 0x80;
+			scriptaddrtype = 0x05;
 			break;
 		case 'X':
 			addrtype = atoi(optarg);

@@ -19,6 +19,7 @@
 
 const char *version = VANITYGEN_VERSION;
 
+int GRSFlag = 0;
 
 static void
 usage(const char *progname)
