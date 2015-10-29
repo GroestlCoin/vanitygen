@@ -1387,19 +1387,15 @@ vg_prefix_context_add_patterns(vg_context_t *vcp,
 	vcpp->base.vc_npatterns_start += npfx;
 
 	if (!npfx && impossible) {
-		const char *ats = "bitcoin", *bw = "\"1\"";
+		const char *ats = "groestlcoin", *bw = "\"F\"";
 		switch (vcpp->base.vc_addrtype) {
 		case 5:
-			ats = "bitcoin script";
+			ats = "groestlcoin script";
 			bw = "\"3\"";
 			break;
 		case 111:
 			ats = "testnet";
 			bw = "\"m\" or \"n\"";
-			break;
-		case 52:
-			ats = "namecoin";
-			bw = "\"M\" or \"N\"";
 			break;
 		default:
 			break;
