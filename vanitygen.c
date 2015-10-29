@@ -297,10 +297,10 @@ usage(const char *name)
 {
 	fprintf(stderr,
 "Vanitygen %s (" OPENSSL_VERSION_TEXT ")\n"
-"Usage: %s [-vqnrik1NT] [-t <threads>] [-f <filename>|-] [<pattern>...]\n"
-"Generates a bitcoin receiving address matching <pattern>, and outputs the\n"
+"Usage: %s [-vqnrik1GT] [-t <threads>] [-f <filename>|-] [<pattern>...]\n"
+"Generates a groestlcoin receiving address matching <pattern>, and outputs the\n"
 "address and associated private key.  The private key may be stored in a safe\n"
-"location or imported into a bitcoin client to spend any balance received on\n"
+"location or imported into a groestlcoin client to spend any balance received on\n"
 "the address.\n"
 "By default, <pattern> is interpreted as an exact prefix.\n"
 "\n"
@@ -313,9 +313,8 @@ usage(const char *name)
 "-i            Case-insensitive prefix search\n"
 "-k            Keep pattern and continue search after finding a match\n"
 "-1            Stop after first match\n"
-"-N            Generate namecoin address\n"
-"-G			   Generate Groestlcoin address\n"
-"-T            Generate bitcoin testnet address\n"
+"-G	       Generate Groestlcoin address\n"
+"-T            Generate Groestlcoin testnet address\n"
 "-X <version>  Generate address with the given version\n"
 "-F <format>   Generate address with the given format (pubkey or script)\n"
 "-P <pubkey>   Specify base public key for piecewise key generation\n"
@@ -364,7 +363,7 @@ main(int argc, char **argv)
 
 	int i;
 
-	while ((opt = getopt(argc, argv, "vqnrik1eE:P:NTGX:F:t:h?f:o:s:")) != -1) {
+	while ((opt = getopt(argc, argv, "vqnrik1eE:P:TGX:F:t:h?f:o:s:")) != -1) {
 		switch (opt) {
 		case 'v':
 			verbose = 2;
@@ -387,12 +386,8 @@ main(int argc, char **argv)
 		case '1':
 			only_one = 1;
 			break;
-		case 'N':
-			addrtype = 52;
-			privtype = 180;
-			scriptaddrtype = -1;
-			break;
 		case 'T':
+			GRSFlag = 1;
 			addrtype = 111;
 			privtype = 239;
 			scriptaddrtype = 196;
