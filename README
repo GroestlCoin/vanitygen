@@ -26,18 +26,7 @@ By default, vanitygen will spawn one worker thread for each CPU in your
 system.  If you wish to limit the number of worker threads created by 
 vanitygen, use the "-t" option.
 
-Example for Bitcoin:
-
-$ ./vanitygen 1Love
-Difficulty: 4476342
-[48165 K/s][total 2080000][Prob 37.2%][50% in 21.2s]                           
-Pattern: 1Love
-Address: 1LoveRg5t2NCDLUZh6Q8ixv74M5YGVxXaN
-Privkey: 5JLUmjZiirgziDmWmNprPsNx8DYwfecUNk1FQXmDPaoKB36fX1o
-
-Vanitygen can also generate Groestlcoin addresses with the -G option.
-
-An example for Groestlcoin:
+Example:
 
 $ ./vanitygen -G FXSLUT
 Difficulty: 264104224
