@@ -639,7 +639,7 @@ server_context_submit_solution(server_context_t *ctxp,
 				    POINT_CONVERSION_UNCOMPRESSED,
 				    NULL);
 	snprintf(urlbuf, sizeof(urlbuf),
-		 "%s?key=%s%%3A%s&privateKey=%s&bitcoinAddress=%s",
+		 "%s?key=%s%%3A%s&privateKey=%s&groestlcoinAddress=%s",
 		 ctxp->submit,
 		 work->pattern,
 		 pubhex,
