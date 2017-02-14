@@ -317,8 +317,6 @@ usage(const char *name)
 "-X <version>  Generate address with the given version\n"
 "-F <format>   Generate address with the given format (pubkey or script)\n"
 "-P <pubkey>   Specify base public key for piecewise key generation\n"
-"-e            Encrypt private keys, prompt for password\n"
-"-E <password> Encrypt private keys with <password> (UNSAFE)\n"
 "-t <threads>  Set number of worker threads (Default: number of CPUs)\n"
 "-f <file>     File containing list of patterns, one per line\n"
 "              (Use \"-\" as the file name for stdin)\n"
