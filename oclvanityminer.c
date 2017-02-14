@@ -37,7 +37,7 @@
 
 const char *version = VANITYGEN_VERSION;
 const int debug = 0;
-
+int GRSFlag = 0;
 
 /*
  * Bounty work item, which includes a pattern and a public key

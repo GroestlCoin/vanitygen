@@ -150,7 +150,6 @@ main(int argc, char **argv)
 			GRSFlag = 1;
 			addrtype = 0x24;
 			privtype = 0x80;
-			scriptaddrtype = 0x05;
 			break;
 		case 'X':
 			addrtype = atoi(optarg);
