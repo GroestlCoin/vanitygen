@@ -39,6 +39,7 @@
 
 #include "pattern.h"
 #include "util.h"
+extern int GRSFlag;
 
 const char *vg_b58_alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
