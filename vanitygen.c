@@ -32,7 +32,7 @@
 #include "pattern.h"
 #include "util.h"
 
-int GRSFlag = 0;
+int GRSFlag = 1;
 
 const char *version = VANITYGEN_VERSION;
 
@@ -297,7 +297,7 @@ usage(const char *name)
 {
 	fprintf(stderr,
 "Vanitygen %s (" OPENSSL_VERSION_TEXT ")\n"
-"Usage: %s [-vqnrik1GT] [-t <threads>] [-f <filename>|-] [<pattern>...]\n"
+"Usage: %s [-vqnrik1T] [-t <threads>] [-f <filename>|-] [<pattern>...]\n"
 "Generates a groestlcoin receiving address matching <pattern>, and outputs the\n"
 "address and associated private key.  The private key may be stored in a safe\n"
 "location or imported into a groestlcoin client to spend any balance received on\n"
@@ -313,7 +313,6 @@ usage(const char *name)
 "-i            Case-insensitive prefix search\n"
 "-k            Keep pattern and continue search after finding a match\n"
 "-1            Stop after first match\n"
-"-G	       Generate Groestlcoin address\n"
 "-T            Generate Groestlcoin testnet address\n"
 "-X <version>  Generate address with the given version\n"
 "-F <format>   Generate address with the given format (pubkey or script)\n"
@@ -333,7 +332,7 @@ version, name);
 int
 main(int argc, char **argv)
 {
-	int addrtype = 0;
+	int addrtype = 36;
 	int scriptaddrtype = 5;
 	int privtype = 128;
 	int pubkeytype;
