@@ -61,7 +61,6 @@ usage(const char *name)
 "-k            Keep pattern and continue search after finding a match\n"
 "-1            Stop after first match\n"
 "-T            Generate groestlcoin testnet address\n"
-"-X <version>  Generate address with the given version\n"
 "-p <platform> Select OpenCL platform\n"
 "-d <device>   Select OpenCL device\n"
 "-D <devstr>   Use OpenCL device, identified by device string\n"
