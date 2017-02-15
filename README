@@ -28,8 +28,18 @@ vanitygen, use the "-t" option.
 
 Example:
 
-$ ./vanitygen -G FXSLUT
-Difficulty: 264104224
-Pattern: FXSLUT                                                                
-Address: FXSLUT2zcZPnhJ7J3BqGUCQMj5cEUyN31V
-Privkey: 5KNtRRpMfpYXVuSv86GF2pKhS4TDvVGy4c2L6psSLRkPikFbzUf
+Generate an address using CPU(slower):
+Linux: ./vanitygen Fgrs
+Windows: vanitygen.exe Fgrs
+Difficulty: 78508
+Pattern: Fgrs                                                                  
+Address: Fgrsa16NshK1ua6KyBSXahz6D9PYUbvL3d
+Privkey: 5JssG8to6x62vf9pC7ktJhXc3jJV31JR1Do7qLvQEx8wVUQ37op
+
+Generate an address using GPU(faster):
+Linux: ./oclvanitygen Fgrs
+Windows: oclvanitygen.exe Fgrs
+Difficulty: 78508
+Pattern: Fgrs                                                                  
+Address: FgrsjEdkYaubKoxqKJ9uGP9pHxknhrn7Vj
+Privkey: 5KHCnR5HAkdrePoQiXcvJh3ZADt1EymnryySi4tkqTArnQGTwQc
