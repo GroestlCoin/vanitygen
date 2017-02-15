@@ -115,3 +115,10 @@ Version 0.22, released October 11, 2012:
 
 Version 0.23, released November 02, 2015
 	- Added -G parameter for Groestlcoin, and Groestlcoin support
+
+Version 1.01, released February 15, 2017
+	- Converted this vanitygen fork to Groestlcoin only.
+	- Removed the need for using the -G flag.
+	- For safety sake, removed password protecting of private keys as keyconv tool doesn't support decrypting Groestlcoin addresses
+	- Multiple makefile fixes
+	- Multiple OpenCL fixes
