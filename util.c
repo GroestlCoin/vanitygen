@@ -184,7 +184,7 @@ vg_b58_decode_check(const char *input, void *buf, size_t len)
 	unsigned char *xbuf = NULL;
 	BIGNUM bn, bnw, bnbase;
 	BN_CTX *bnctx;
-	unsigned char hash1[32], hash2[32];
+	unsigned char hash1[64], hash2[64];
 	int zpfx;
 	int res = 0;
 
@@ -230,8 +230,16 @@ vg_b58_decode_check(const char *input, void *buf, size_t len)
 
 	/* Check the hash code */
 	l -= 4;
-	SHA256(xbuf, l, hash1);
-	SHA256(hash1, sizeof(hash1), hash2);
+		sph_groestl512_context ctx;
+		
+		sph_groestl512_init(&ctx);
+		sph_groestl512(&ctx, xbuf, l);
+		sph_groestl512_close(&ctx, hash1);
+		
+		sph_groestl512_init(&ctx);
+		sph_groestl512(&ctx, hash1, sizeof(hash1));
+		sph_groestl512_close(&ctx, hash2);
+
 	if (memcmp(hash2, xbuf + l, 4))
 		goto out;
 

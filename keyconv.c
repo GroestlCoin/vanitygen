@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <math.h>
 #include <assert.h>
 
@@ -19,7 +20,7 @@
 
 const char *version = VANITYGEN_VERSION;
 
-int GRSFlag = 0;
+int GRSFlag = 1;
 
 static void
 usage(const char *progname)
@@ -32,6 +33,7 @@ usage(const char *progname)
 "-e            Encrypt output key, prompt for password\n"
 "-E <password> Encrypt output key with <password> (UNSAFE)\n"
 "-c <key>      Combine private key parts to make complete private key\n"
+"-d            Decrypt output key, prompt for password\n"
 "-v            Verbose output\n",
 		version, progname);
 }
@@ -48,15 +50,17 @@ main(int argc, char **argv)
 	const char *key2_in = NULL;
 	EC_KEY *pkey;
 	int parameter_group = -1;
-	int privtype, addrtype;
+	int addrtype = 36; 
+	int privtype = 128; 
 	int pkcs8 = 0;
 	int pass_prompt = 0;
 	int verbose = 0;
 	int generate = 0;
+	int decrypt = 0; 
 	int opt;
 	int res;
 
-	while ((opt = getopt(argc, argv, "8E:ec:vG")) != -1) {
+	while ((opt = getopt(argc, argv, "8E:ec:vGd")) != -1) {
 		switch (opt) {
 		case '8':
 			pkcs8 = 1;
@@ -87,11 +91,15 @@ main(int argc, char **argv)
 		case 'G':
 			generate = 1;
 			break;
+		case 'd':
+			decrypt = 1; 
+			break; 
 		default:
 			usage(argv[0]);
 			return 1;
 		}
 	}
+
 
 	OpenSSL_add_all_algorithms();
 
@@ -99,8 +107,6 @@ main(int argc, char **argv)
 
 	if (generate) {
 		unsigned char *pend = (unsigned char *) pbuf;
-		addrtype = 0;
-		privtype = 128;
 		EC_KEY_generate_key(pkey);
 		res = i2o_ECPublicKey(pkey, &pend);
 		fprintf(stderr, "Pubkey (hex): ");
@@ -124,13 +130,16 @@ main(int argc, char **argv)
 		key_in = argv[optind];
 	}
 
-	res = vg_decode_privkey_any(pkey, &privtype, key_in, NULL);
-	if (res < 0) {
+	if (decrypt) {
+
 		if (EVP_read_pw_string(pwbuf, sizeof(pwbuf),
 				       "Enter import password:", 0) ||
-		    !vg_decode_privkey_any(pkey, &privtype, key_in, pwbuf))
+		    !vg_protect_decode_privkey(pkey, &privtype, key_in, pwbuf))
+
 			return 1;
-	}
+		res = 1; 
+	} else  
+		res = vg_decode_privkey_any(pkey, &privtype, key_in, NULL); 
 
 	if (!res) {
 		fprintf(stderr, "ERROR: Unrecognized key format\n");
@@ -180,12 +189,6 @@ main(int argc, char **argv)
 		pass_in = pwbuf;
 		if (!vg_check_password_complexity(pwbuf, 1))
 			fprintf(stderr, "WARNING: Using weak password\n");
-	}
-
-	switch (privtype) {
-	case 128: addrtype = 0; break;
-	case 239: addrtype = 111; break;
-	default:  addrtype = 0; break;
 	}
 
 	if (verbose) {
