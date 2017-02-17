@@ -1401,7 +1401,7 @@ vg_prefix_context_add_patterns(vg_context_t *vcp,
 			break;
 		}
 		fprintf(stderr,
-			"Hint: valid %s addresses begin with %s\n", ats, bw);
+			"Hint: Valid %s addresses begin with %s, also note that certain characters are not allowed as the second character in the address.\n", ats, bw);
 	}
 
 	if (npfx)
