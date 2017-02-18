@@ -314,6 +314,8 @@ usage(const char *name)
 "-k            Keep pattern and continue search after finding a match\n"
 "-1            Stop after first match\n"
 "-T            Generate Groestlcoin testnet address\n"
+"-e            Encrypt private keys, prompt for password\n"
+"-E <password> Encrypt private keys with <password> (UNSAFE)\n"
 "-F <format>   Generate address with the given format (pubkey or script)\n"
 "-P <pubkey>   Specify base public key for piecewise key generation\n"
 "-t <threads>  Set number of worker threads (Default: number of CPUs)\n"
