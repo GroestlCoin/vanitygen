@@ -122,3 +122,7 @@ Version 1.01, released February 15, 2017
 	- For safety sake, removed password protecting of private keys as keyconv tool doesn't support decrypting Groestlcoin addresses
 	- Multiple makefile fixes
 	- Multiple OpenCL fixes
+
+Version 1.02, released February 18, 2017
+	- Add keyconv support(encryption/decryption of private keys using password)
+	- Fix misleading error messages

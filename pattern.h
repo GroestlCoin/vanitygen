@@ -35,7 +35,7 @@
 #include <unistd.h>
 #endif
 
-#define VANITYGEN_VERSION "GROESTL v1.01"
+#define VANITYGEN_VERSION "GROESTL v1.02"
 
 typedef struct _vg_context_s vg_context_t;
 
