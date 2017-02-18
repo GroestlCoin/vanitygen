@@ -27,6 +27,8 @@ system.  If you wish to limit the number of worker threads created by
 vanitygen, use the "-t" option.
 
 -----
+Latest binary release is available at: https://github.com/Groestlcoin/vanitygen/releases
+-----
 
 ###General Usage Example:###
 
