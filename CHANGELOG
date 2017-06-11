@@ -126,3 +126,6 @@ Version 1.01, released February 15, 2017
 Version 1.02, released February 18, 2017
 	- Add keyconv support(encryption/decryption of private keys using password)
 	- Fix misleading error messages
+
+Version 1.02b, released June 11, 2017
+	- Error Compiling Kernel fix by Rav3nPL
