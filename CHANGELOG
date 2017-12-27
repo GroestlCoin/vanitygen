@@ -130,7 +130,7 @@ Version 1.02, released February 18, 2017
 Version 1.02b, released June 11, 2017
 	- Error Compiling Kernel fix by Rav3nPL
 
-Version 1.03, release pending
+Version 1.03, released December 27, 2017
 	- Add compressed address support by salfter
 	- Add ocl compressed address support by scintill
 	- Add keyconv compressed suppport by ryancdotorg
