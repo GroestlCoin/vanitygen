@@ -30,6 +30,7 @@ usage(const char *progname)
 "Usage: %s [-8] [-e|-E <password>] [-c <key>] [<key>]\n"
 "-G            Generate a key pair and output the full public key\n"
 "-8            Output key in PKCS#8 form\n"
+"-F <format>   Output address in the given format (compressed)\n"
 "-e            Encrypt output key, prompt for password\n"
 "-E <password> Encrypt output key with <password> (UNSAFE)\n"
 "-c <key>      Combine private key parts to make complete private key\n"
@@ -50,17 +51,18 @@ main(int argc, char **argv)
 	const char *key2_in = NULL;
 	EC_KEY *pkey;
 	int parameter_group = -1;
-	int addrtype = 36; 
-	int privtype = 128; 
+	int addrtype = 36;
+	int privtype = 128;
 	int pkcs8 = 0;
 	int pass_prompt = 0;
+	int compressed = 0;
 	int verbose = 0;
 	int generate = 0;
-	int decrypt = 0; 
+	int decrypt = 0;
 	int opt;
 	int res;
 
-	while ((opt = getopt(argc, argv, "8E:ec:vGd")) != -1) {
+	while ((opt = getopt(argc, argv, "8E:ec:vGdF:")) != -1) { 
 		switch (opt) {
 		case '8':
 			pkcs8 = 1;
@@ -92,8 +94,18 @@ main(int argc, char **argv)
 			generate = 1;
 			break;
 		case 'd':
-			decrypt = 1; 
-			break; 
+			decrypt = 1;
+			break;
+		case 'F':
+                        if (!strcmp(optarg, "compressed")) {
+                                compressed = 1;
+			}
+                        else {
+				fprintf(stderr,
+					"Invalid choice '%s'\n", optarg);
+				return 1;
+			}
+			break;
 		default:
 			usage(argv[0]);
 			return 1;
@@ -131,19 +143,21 @@ main(int argc, char **argv)
 	}
 
 	if (decrypt) {
-
 		if (EVP_read_pw_string(pwbuf, sizeof(pwbuf),
 				       "Enter import password:", 0) ||
 		    !vg_protect_decode_privkey(pkey, &privtype, key_in, pwbuf))
-
 			return 1;
-		res = 1; 
-	} else  
-		res = vg_decode_privkey_any(pkey, &privtype, key_in, NULL); 
+		res = 1;
+	} else
+		res = vg_decode_privkey_any(pkey, &privtype, key_in, NULL);
 
 	if (!res) {
 		fprintf(stderr, "ERROR: Unrecognized key format\n");
 		return 1;
+	}
+
+	if (res == 2) {
+		compressed = 1;
 	}
 
 	if (key2_in) {
@@ -165,6 +179,11 @@ main(int argc, char **argv)
 			fprintf(stderr, "ERROR: Unrecognized key format\n");
 			return 1;
 		}
+
+		if (res == 2) {
+			compressed = 1;
+		}
+
 		BN_init(&bntmp);
 		BN_init(&bntmp2);
 		bnctx = BN_CTX_new();
@@ -199,7 +218,7 @@ main(int argc, char **argv)
 		fprintf(stderr, "Privkey (hex): ");
 		dumpbn(EC_KEY_get0_private_key(pkey));
 	}
-			
+
 	if (pkcs8) {
 		res = vg_pkcs8_encode_privkey(pbuf, sizeof(pbuf),
 					      pkey, pass_in);
@@ -229,12 +248,21 @@ main(int argc, char **argv)
 	}
 
 	else {
-		vg_encode_address(EC_KEY_get0_public_key(pkey),
-				  EC_KEY_get0_group(pkey),
-				  addrtype, ecprot);
-		printf("Address: %s\n", ecprot);
-		vg_encode_privkey(pkey, privtype, ecprot);
-		printf("Privkey: %s\n", ecprot);
+		if (compressed) {
+			vg_encode_address_compressed(EC_KEY_get0_public_key(pkey),
+						     EC_KEY_get0_group(pkey),
+						     addrtype, ecprot);
+			printf("Address: %s\n", ecprot);
+			vg_encode_privkey_compressed(pkey, privtype, ecprot);
+			printf("Privkey: %s\n", ecprot);
+		} else {
+			vg_encode_address(EC_KEY_get0_public_key(pkey),
+					  EC_KEY_get0_group(pkey),
+					  addrtype, ecprot);
+			printf("Address: %s\n", ecprot);
+			vg_encode_privkey(pkey, privtype, ecprot);
+			printf("Privkey: %s\n", ecprot);
+		}
 	}
 
 	OPENSSL_cleanse(pwbuf, sizeof(pwbuf));
