@@ -116,7 +116,7 @@ vg_thread_loop(void *arg)
 
 	} else {
 		eckey_buf = hash_buf;
-		hash_len = 65;
+		hash_len = (vcp->vc_compressed)?33:65;
 	}
 
 	while (!vcp->vc_halt) {
@@ -196,11 +196,11 @@ vg_thread_loop(void *arg)
 		for (i = 0; i < nbatch; i++, vxcp->vxc_delta++) {
 			/* Hash the public key */
 			len = EC_POINT_point2oct(pgroup, ppnt[i],
-						 POINT_CONVERSION_UNCOMPRESSED,
+						 (vcp->vc_compressed)?POINT_CONVERSION_COMPRESSED:POINT_CONVERSION_UNCOMPRESSED,
 						 eckey_buf,
-						 65,
+						 (vcp->vc_compressed)?33:65,
 						 vxcp->vxc_bnctx);
-			assert(len == 65);
+			assert(len == 65 || len == 33);
 
 			SHA256(hash_buf, hash_len, hash1);
 			RIPEMD160(hash1, sizeof(hash1), &vxcp->vxc_binres[1]);
@@ -314,10 +314,10 @@ usage(const char *name)
 "-k            Keep pattern and continue search after finding a match\n"
 "-1            Stop after first match\n"
 "-T            Generate Groestlcoin testnet address\n"
+"-F <format>   Generate address with the given format (pubkey, compressed, script)\n"
+"-P <pubkey>   Specify base public key for piecewise key generation\n"
 "-e            Encrypt private keys, prompt for password\n"
 "-E <password> Encrypt private keys with <password> (UNSAFE)\n"
-"-F <format>   Generate address with the given format (pubkey or script)\n"
-"-P <pubkey>   Specify base public key for piecewise key generation\n"
 "-t <threads>  Set number of worker threads (Default: number of CPUs)\n"
 "-f <file>     File containing list of patterns, one per line\n"
 "              (Use \"-\" as the file name for stdin)\n"
@@ -358,11 +358,15 @@ main(int argc, char **argv)
 	int pattfpi[MAX_FILE];
 	int npattfp = 0;
 	int pattstdin = 0;
+	int compressed = 0;
 
 	int i;
 
 	while ((opt = getopt(argc, argv, "vqnrik1eE:P:TGX:F:t:h?f:o:s:")) != -1) {
 		switch (opt) {
+		case 'c':
+		        compressed = 1;
+		        break;
 		case 'v':
 			verbose = 2;
 			break;
@@ -404,7 +408,10 @@ main(int argc, char **argv)
 		case 'F':
 			if (!strcmp(optarg, "script"))
 				format = VCF_SCRIPT;
-			else
+                        else
+                        if (!strcmp(optarg, "compressed"))
+                                compressed = 1;
+                        else
 			if (strcmp(optarg, "pubkey")) {
 				fprintf(stderr,
 					"Invalid format '%s'\n", optarg);
@@ -546,6 +553,7 @@ main(int argc, char **argv)
 					    caseinsensitive);
 	}
 
+	vcp->vc_compressed = compressed;
 	vcp->vc_verbose = verbose;
 	vcp->vc_result_file = result_file;
 	vcp->vc_remove_on_match = remove_on_match;
