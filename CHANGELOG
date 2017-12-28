@@ -134,3 +134,6 @@ Version 1.03, released December 27, 2017
 	- Add compressed address support by salfter
 	- Add ocl compressed address support by scintill
 	- Add keyconv compressed suppport by ryancdotorg
+
+Version 1.03b, released December 28, 2017
+	- Apply bug fix by cmisare
