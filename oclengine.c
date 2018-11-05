@@ -5,7 +5,7 @@
  * Vanitygen is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * any later version. 
+ * any later version.
  *
  * Vanitygen is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -307,9 +307,9 @@ vg_ocl_dump_info(vg_ocl_context_t *vocp)
 	       vg_ocl_device_getstr(did, CL_DEVICE_PROFILE));
 	fprintf(stderr, "Version: %s\n",
 	       vg_ocl_device_getstr(did, CL_DEVICE_VERSION));
-	fprintf(stderr, "Max compute units: %"PRSIZET"d\n",
+	fprintf(stderr, "Max compute units: %" PRSIZET "d\n",
 	       vg_ocl_device_getsizet(did, CL_DEVICE_MAX_COMPUTE_UNITS));
-	fprintf(stderr, "Max workgroup size: %"PRSIZET"d\n",
+	fprintf(stderr, "Max workgroup size: %" PRSIZET "d\n",
 	       vg_ocl_device_getsizet(did, CL_DEVICE_MAX_WORK_GROUP_SIZE));
 	fprintf(stderr, "Global memory: %ld\n",
 	       vg_ocl_device_getulong(did, CL_DEVICE_GLOBAL_MEM_SIZE));
@@ -790,7 +790,7 @@ vg_ocl_load_program(vg_context_t *vcp, vg_ocl_context_t *vocp,
 		buf = (char *) malloc(szr);
 		if (!buf) {
 			fprintf(stderr,
-				"WARNING: Could not allocate %"PRSIZET"d bytes "
+				"WARNING: Could not allocate %" PRSIZET "d bytes "
 				"for CL binary\n",
 			       szr);
 			goto out;
@@ -838,7 +838,7 @@ vg_ocl_load_program(vg_context_t *vcp, vg_ocl_context_t *vocp,
 				fprintf(stderr,
 					"WARNING: short write on CL kernel "
 					"binary file: expected "
-					"%"PRSIZET"d, got %"PRSIZET"d\n",
+					"%" PRSIZET "d, got %" PRSIZET "d\n",
 					szr, sz);
 				unlink(bin_name);
 			}
@@ -1030,7 +1030,7 @@ vg_ocl_kernel_arg_alloc(vg_ocl_context_t *vocp, int slot,
 					     karg,
 					     sizeof(clbuf),
 					     &clbuf);
-			
+
 			if (ret) {
 				fprintf(stderr,
 					"clSetKernelArg(%d,%d): ", knum, karg);
@@ -1062,7 +1062,7 @@ vg_ocl_copyout_arg(vg_ocl_context_t *vocp, int wslot, int arg,
 				   buffer,
 				   0, NULL,
 				   NULL);
-			
+
 	if (ret) {
 		fprintf(stderr, "clEnqueueWriteBuffer(%d): ", arg);
 		vg_ocl_error(vocp, ret, NULL);
@@ -2189,7 +2189,7 @@ l_rekey:
 			slot_busy = 1;
 			slot = (slot + 1) % nslots;
 
-		} else { 
+		} else {
 			if (slot_busy) {
 				pthread_mutex_lock(&vocp->voc_lock);
 				while (vocp->voc_ocl_slot != -1) {
