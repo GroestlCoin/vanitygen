@@ -1,6 +1,5 @@
 Linux:
-apt-get install libpcre++-dev
-sudo apt-get install opencl-headers
+apt-get install build-essential libtool autotools-dev autoconf libssl-dev libdb-dev libdb++-dev libboost-all-dev libpcre3 libpcre3-dev automake libpcre++-dev opencl-headers
 sudo ln -s /usr/lib/x86_64-linux-gnu/libOpenCL.so.1 /usr/lib/libOpenCL.so
 make
 
