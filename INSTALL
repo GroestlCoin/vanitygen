@@ -15,5 +15,15 @@ Prerequisites:
   - pthreads-Win32 (copy all files to C:\pthreads): https://github.com/Groestlcoin/vanitygen/tree/master/pthreads
   - PCRE 7.9 static (extract to C:\pcre-7.9-static): https://www.psyon.org/projects/pcre-win32/pcre-7.9-static.zip
   - AMD APP SDK 3:0 (install at default location): http://amd-dev.wpengine.netdna-cdn.com/app-sdk/installers/APPSDKInstaller/3.0.130.135-GA/full/AMD-APP-SDKInstaller-v3.0.130.135-GA-windows-F-x86.exe
-Open Developer Command Prompt for Visual Studio 2017, and run:
+Open Developer Command Prompt for VS 2017, and run:
 nmake -f Makefile.Win32
+
+Windows 64bit:
+Tools: Microsoft Visual Studio 2017 Community with Visual C++
+Prerequisites:
+  - OpenSSL 1.0.2p (extract to C:\OpenSSL-Win64): http://slproweb.com/download/Win64OpenSSL-1_0_2p.exe
+  - pthreads-Win64 (copy all files to C:\pthreads-w64): https://github.com/Groestlcoin/vanitygen/tree/master/pthreads-w64
+  - PCRE 8.31 static-w64 (copy all files to C:\pcre-8.31-static-w64): https://github.com/Groestlcoin/vanitygen/tree/master/pcre-8.31-static-w64
+  - AMD APP SDK 3:0 (install at default location): http://amd-dev.wpengine.netdna-cdn.com/app-sdk/installers/APPSDKInstaller/3.0.130.135-GA/full/AMD-APP-SDKInstaller-v3.0.130.135-GA-windows-F-x64.exe
+Open x64 Native Tools Command Prompt for VS 2017, and run:
+nmake -f Makefile.Win64
