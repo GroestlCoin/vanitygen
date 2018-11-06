@@ -5,7 +5,7 @@
  * Vanitygen is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * any later version. 
+ * any later version.
  *
  * Vanitygen is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -46,7 +46,7 @@ extern int count_processors(void);
 #ifdef __linux__
 
 static inline char *
-strtok_r(char *strToken, const char *strDelimit, char **context) {
+strtok_s(char *strToken, const char *strDelimit, char **context) {
 	return strtok_s(strToken, strDelimit, context);
 }
 
