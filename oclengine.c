@@ -2661,7 +2661,7 @@ vg_ocl_context_new_from_devstr(vg_context_t *vcp, const char *devstr,
 		return NULL;
 
 	save = NULL;
-	part = strtok_s(dsd, ",", &save);
+	part = strtok_r(dsd, ",", &save);
 
 	part2 = strchr(part, ':');
 	if (!part2) {
@@ -2674,7 +2674,7 @@ vg_ocl_context_new_from_devstr(vg_context_t *vcp, const char *devstr,
 	platformidx = atoi(part);
 	deviceidx = atoi(part2 + 1);
 
-	while ((part = strtok_s(NULL, ",", &save)) != NULL) {
+	while ((part = strtok_r(NULL, ",", &save)) != NULL) {
 		param = strchr(part, '=');
 		if (!param) {
 			fprintf(stderr, "Unrecognized parameter '%s'\n", part);
