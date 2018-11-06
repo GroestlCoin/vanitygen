@@ -13,7 +13,7 @@ else
 endif
 
 
-most: vanitygen keyconv
+most: vanitygen keyconv oclvanitygen
 
 all: $(PROGS)
 

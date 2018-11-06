@@ -1,14 +1,15 @@
-Linux/OSX with GNU make:
+Linux:
+apt-get install libpcre++-dev
+sudo apt-get install opencl-headers
+sudo ln -s /usr/lib/x86_64-linux-gnu/libOpenCL.so.1 /usr/lib/libOpenCL.so
 make
 
-Windows:
+Windows 32bit:
 Tools: Microsoft Visual Studio 2017 Community with Visual C++
 Prerequisites:
   - OpenSSL 1.0.2p (extract to C:\OpenSSL-Win32): http://slproweb.com/download/Win32OpenSSL-1_0_2p.exe
   - pthreads-Win32 (copy all files to C:\pthreads): https://github.com/Groestlcoin/vanitygen/tree/master/pthreads
   - PCRE 7.9 static (extract to C:\pcre-7.9-static): https://www.psyon.org/projects/pcre-win32/pcre-7.9-static.zip
   - AMD APP SDK 3:0 (install at default location): http://amd-dev.wpengine.netdna-cdn.com/app-sdk/installers/APPSDKInstaller/3.0.130.135-GA/full/AMD-APP-SDKInstaller-v3.0.130.135-GA-windows-F-x86.exe
-
 Open Developer Command Prompt for Visual Studio 2017, and run:
-
 nmake -f Makefile.Win32
