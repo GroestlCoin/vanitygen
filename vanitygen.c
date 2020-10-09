@@ -5,7 +5,7 @@
  * Vanitygen is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * any later version. 
+ * any later version.
  *
  * Vanitygen is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -91,8 +91,8 @@ vg_thread_loop(void *arg)
 		exit(1);
 	}
 
-	BN_set_word(&vxcp->vxc_bntmp, ptarraysize);
-	EC_POINT_mul(pgroup, pbatchinc, &vxcp->vxc_bntmp, NULL, NULL,
+	BN_set_word(vxcp->vxc_bntmp, ptarraysize);
+	EC_POINT_mul(pgroup, pbatchinc, vxcp->vxc_bntmp, NULL, NULL,
 		     vxcp->vxc_bnctx);
 	EC_POINT_make_affine(pgroup, pbatchinc, vxcp->vxc_bnctx);
 
@@ -127,13 +127,13 @@ vg_thread_loop(void *arg)
 			npoints = 0;
 
 			/* Determine rekey interval */
-			EC_GROUP_get_order(pgroup, &vxcp->vxc_bntmp,
+			EC_GROUP_get_order(pgroup, vxcp->vxc_bntmp,
 					   vxcp->vxc_bnctx);
-			BN_sub(&vxcp->vxc_bntmp2,
-			       &vxcp->vxc_bntmp,
+			BN_sub(vxcp->vxc_bntmp2,
+			       vxcp->vxc_bntmp,
 			       EC_KEY_get0_private_key(pkey));
-			rekey_at = BN_get_word(&vxcp->vxc_bntmp2);
-			if ((rekey_at == BN_MASK2) || (rekey_at > rekey_max))
+			rekey_at = BN_get_word(vxcp->vxc_bntmp2);
+			if ((rekey_at == 0xffffffffL) || (rekey_at > rekey_max))
 				rekey_at = rekey_max;
 			assert(rekey_at > 0);
 
@@ -246,6 +246,9 @@ out:
 int
 count_processors(void)
 {
+#if defined(__APPLE__)
+    int count = sysconf(_SC_NPROCESSORS_ONLN);
+#else
 	FILE *fp;
 	char buf[512];
 	int count = 0;
@@ -259,7 +262,8 @@ count_processors(void)
 			count += 1;
 	}
 	fclose(fp);
-	return count;
+#endif
+    return count;
 }
 #endif
 
@@ -436,7 +440,7 @@ main(int argc, char **argv)
 			}
 			break;
 		}
-			
+
 		case 'e':
 			prompt_password = 1;
 			break;
